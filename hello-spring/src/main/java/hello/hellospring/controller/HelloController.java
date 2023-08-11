@@ -13,6 +13,7 @@ public class HelloController {
 	public String hello(Model model) {
 		model.addAttribute("data", "hello!!");
 		return "hello"; // templates에서 찾는다.
+		// 뷰 리절브가 동작하여 hello.html을 찾는다.
 	}
 	
 	@GetMapping("hello-mvc")
@@ -32,7 +33,9 @@ public class HelloController {
 	public Hello helloApi(String name) {
 		Hello hello = new Hello();
 		hello.setName(name);
-		return hello;
+		return hello; // {"name" : "spring"} 이렇게 json 형식으로 넘어간다.
+		// ResponseBody가 있으면 HttpMessageConveter가 동작한다. (뷰 리절브 아님)
+		// 객체를 반환하면 json으로 반환된다.
 	}
 	
 	static class Hello{ // 내부 클래스
