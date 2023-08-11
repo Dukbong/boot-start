@@ -1,0 +1,44 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.14'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'hello'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '11'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	/*
+		spring-boot-starter-web 라이브러리는 아래 두가지를 모두 가지고 있다.
+		-> starter-tomcat : 톰캣 (웹서버)
+		-> spring-webmvc : 스프링 웹 MVC
+		
+		sprint-boot-starter(공통) : 스프링부트 + 스프링 코어 + 로깅을 가지고 있다.
+		-> spring-boot
+		   -> spring-core
+		-> spring-boot-starter-logging
+		   -> logback, slf4j
+	*/
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	/*
+		spring-boot-starter-test
+		-> junit : 테스트 프레임 워크
+		-> mockito : 목 라이브러리
+		-> assertj : 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
+		-> spring-test : 스프링 통합 테스트 지원
+	*/
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
