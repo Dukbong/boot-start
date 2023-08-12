@@ -3,12 +3,15 @@ package hello.hellospring.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 
+@Transactional
 public class MemberService {
 	private final MemberRepository memberRepository;
 	
@@ -22,9 +25,9 @@ public class MemberService {
 	 * 회원가입
 	 */
 	public Long join(Member member) {
-		validateDuplicateMember(member);
-		memberRepository.save(member);
-		return member.getId();
+			validateDuplicateMember(member);
+			memberRepository.save(member);
+			return member.getId();
 	}
 	
 	private void validateDuplicateMember(Member member) {
