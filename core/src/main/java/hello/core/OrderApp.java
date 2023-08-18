@@ -11,9 +11,24 @@ import hello.core.order.OrderServiceImpl;
 public class OrderApp {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		MemberService memberService = new MemberServiceImpl();
-		OrderService orderService = new OrderServiceImpl();
+		// DIP 위반 코드
+//		MemberService memberService = new MemberServiceImpl(null);
+//		OrderService orderService = new OrderServiceImpl(null, null );
+//		
+//		Long memberId = 1L;
+//		
+//		Member member = new Member(memberId, "memberA", Grade.VIP);
+//		memberService.join(member);
+//		
+//		Order order = orderService.createOrder(memberId, "itemA", 10000);
+//		
+//		System.out.println("order = " + order.toString());
+//		System.out.println("order.calculratePrice = " + order.calculatePrice());
+		
+		// DIP 문제 해결 코드
+		AppConfig appConfig = new AppConfig();
+		MemberService memberService = appConfig.memberService();
+		OrderService orderService = appConfig.orderService();
 		
 		Long memberId = 1L;
 		

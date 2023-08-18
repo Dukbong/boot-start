@@ -14,15 +14,27 @@ public class MemberApp {
 		 * 해당 내용을 테스트 코드로 만들어서 쉽게 확인이 가능하다.
 		 * src/test/java/member/MemberServcieTest
 		 * */
-		MemberService memberService = new MemberServiceImpl();
-		Member memberA = new Member(1L, "memberA", Grade.VIP);
-	
-		memberService.join(memberA);
 		
-		Member memberTest = memberService.findMember(memberA.getId());
+		// DIP 위반 된 코드 였던것.
+//		MemberService memberService = new MemberServiceImpl();
+//		Member memberA = new Member(1L, "memberA", Grade.VIP);
+//	
+//		memberService.join(memberA);
+//		
+//		Member memberTest = memberService.findMember(memberA.getId());
+//		
+//		System.out.println("new member = " + memberA.getName());
+//		System.out.println("findMember = " + memberTest.getName());
 		
-		System.out.println("new member = " + memberA.getName());
-		System.out.println("findMember = " + memberTest.getName());
+		// DIP 문제를 해결한 코드;
+		AppConfig appConfig = new AppConfig();
+		MemberService memberService = appConfig.memberService();
+		Member member = new Member(1L, "memberA", Grade.VIP);
+		memberService.join(member);
+		
+		Member findMember = memberService.findMember(1L);
+		System.out.println("new Member=  " + member.getName());
+		System.out.println("find Member=  " +findMember.getName());
 	}
 
 }
