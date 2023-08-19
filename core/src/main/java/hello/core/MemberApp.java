@@ -45,7 +45,7 @@ public class MemberApp {
 		
 		MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
 		// getBean("불러올 메소드명", 반환타입.class);
-		
+		// 기본적인 방법은 두가지 모두 적거나 타입이나 이름만 적거나 해서 찾을 수 있다.
 		Member member = new Member(1L, "memberA", Grade.VIP);
 		memberService.join(member);
 		
