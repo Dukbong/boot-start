@@ -1,5 +1,8 @@
 package hello.core;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import hello.core.member.Grade;
 import hello.core.member.Member;
 import hello.core.member.MemberService;
@@ -27,8 +30,22 @@ public class MemberApp {
 //		System.out.println("findMember = " + memberTest.getName());
 		
 		// DIP 문제를 해결한 코드;
-		AppConfig appConfig = new AppConfig();
-		MemberService memberService = appConfig.memberService();
+//		AppConfig appConfig = new AppConfig();
+//		MemberService memberService = appConfig.memberService();
+//		Member member = new Member(1L, "memberA", Grade.VIP);
+//		memberService.join(member);
+//		
+//		Member findMember = memberService.findMember(1L);
+//		System.out.println("new Member=  " + member.getName());
+//		System.out.println("find Member=  " +findMember.getName());
+		
+		
+		// 스프링 전환
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
+		// getBean("불러올 메소드명", 반환타입.class);
+		
 		Member member = new Member(1L, "memberA", Grade.VIP);
 		memberService.join(member);
 		
