@@ -1,6 +1,8 @@
 package hello.core;
 
-import hello.core.discount.FixDicountPolicy;
+import hello.core.discount.DiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
+import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
@@ -13,11 +15,22 @@ public class AppConfig {
 	// 기획자 역할이고 각각의 클래스는 배역이라고 할 수 있다.
 	// 기획자가 배역에 맞는 배우를 골라서 넣어주면 된다.
 	
+	// 이런식으로 AppConfig에서 역할과 구현 클래스를 한눈에 볼 수 있어야한다.
+	private MemberRepository memberRepository() {
+		return new MemoryMemberRepository();
+	}
+	
+	private DiscountPolicy discountPolicy() {
+//		return new FixDicountPolicy();
+		return new RateDiscountPolicy();
+	}
+	
 	public MemberService memberService() {
-		return new MemberServiceImpl(new MemoryMemberRepository());
+		return new MemberServiceImpl(memberRepository());
 	}
 	
 	public OrderService orderService() {
-		return new OrderServiceImpl(new MemoryMemberRepository(), new FixDicountPolicy());
+		return new OrderServiceImpl(memberRepository(), discountPolicy());
 	}
+	
 }
