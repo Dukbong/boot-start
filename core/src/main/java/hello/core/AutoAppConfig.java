@@ -38,8 +38,8 @@ public class AutoAppConfig {
 	// 만약 의도적이라면 application.properties 파일에
 	// bean-definition-overriding-true를 입력해줘야한다.
 	// 디폴트값은 false이다.
-	@Bean(name="memoryMemberRepository")
-	MemberRepository memberRepotiRepository() {
-		return new MemoryMemberRepository();
-	}
+//	@Bean(name="memoryMemberRepository")
+//	MemberRepository memberRepotiRepository() {
+//		return new MemoryMemberRepository();
+//	}
 }
