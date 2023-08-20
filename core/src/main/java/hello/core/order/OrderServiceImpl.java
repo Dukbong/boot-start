@@ -1,9 +1,13 @@
 package hello.core.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 
+@Component
 public class OrderServiceImpl implements OrderService {
 
 	// SRP(단일책임 원칙)이  잘 지켜지고 있는 클래스들이다. (회원과 할인을 잘 나눠져 있다.)
@@ -19,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
 	private final MemberRepository memberRepository;
 	private final DiscountPolicy discountPolicy;
 	
+	@Autowired
 	public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
 		super();
 		this.memberRepository = memberRepository;

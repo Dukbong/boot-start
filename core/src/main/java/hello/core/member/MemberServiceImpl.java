@@ -1,5 +1,9 @@
 package hello.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberServiceImpl implements MemberService {
 
 	// 순수하게 자바 코드로만 작성할 경우 아래와 같이 DIP 원칙이 지켜지지 않는다.
@@ -14,6 +18,11 @@ public class MemberServiceImpl implements MemberService {
 	// AppConfig라는 외부 파일에서 memberRepository의 구현체를 넣어주고 있기 때문에
 	// 해당 코드는 DIP를 위반하지 않게 된다.
 	// 해당 클래스 입장에서 보면 의존관계가 외부에서 주입해주는 것이기 때문에 DI또는 의존성 주입이라고 한다.
+//	public MemberServiceImpl(MemberRepository memberRepository) {
+//		this.memberRepository = memberRepository;
+//	}
+	
+	@Autowired
 	public MemberServiceImpl(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
