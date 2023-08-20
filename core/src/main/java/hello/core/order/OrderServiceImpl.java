@@ -1,15 +1,15 @@
 package hello.core.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 // final 붙은 필드의 생성자를 만들어주는 어노테이션
 public class OrderServiceImpl implements OrderService {
 
@@ -26,12 +26,37 @@ public class OrderServiceImpl implements OrderService {
 	private final MemberRepository memberRepository;
 	private final DiscountPolicy discountPolicy;
 	
+	
 //	@Autowired
 //	public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//		super();
 //		this.memberRepository = memberRepository;
 //		this.discountPolicy = discountPolicy;
 //	}
+	
+	// Autowired 필드명 매칭 방법
+//	@Autowired
+//	// 같은 타입이 2개 이상이면 매개변수 명을 빈에 등록된 이름으로 변경해줘야한다.
+//	// 같은 타입이 2개 이상일 경lombok을 이용해서 RequiredArgsConstructor를 사용하면 안된다.
+//	// 만약 RateDiscountPolicy를 사용하려면 여기에 rateDiscountPolicy를 쓰면 된다.
+//	// 만약 FixDiscountPolicy를 사용하려면 여기에 fixDiscountPolicy를 쓰면된다.
+//	public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+//		this.memberRepository = memberRepository;
+//		this.discountPolicy = rateDiscountPolicy;
+//	}
+	
+	// Qualifier 구분자로 매칭 방법
+//	@Autowired
+//	public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy")DiscountPolicy DiscountPolicy) {
+//		this.memberRepository = memberRepository;
+//		this.discountPolicy = DiscountPolicy;
+//	}
+	
+	// Primary 사용
+	@Autowired
+	public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy DiscountPolicy) {
+		this.memberRepository = memberRepository;
+		this.discountPolicy = DiscountPolicy;
+	}
 
 	@Override
 	public Order createOrder(Long memberId, String itemName, int itemPrice) {
