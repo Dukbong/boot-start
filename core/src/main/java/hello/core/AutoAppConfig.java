@@ -1,8 +1,12 @@
 package hello.core;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+
+import hello.core.member.MemberRepository;
+import hello.core.member.MemoryMemberRepository;
 
 @Configuration
 @ComponentScan(
@@ -26,4 +30,16 @@ import org.springframework.context.annotation.FilterType;
 )
 public class AutoAppConfig {
 	
+	// 수동 빈 등록과 자동 빈 등록시 이름이 중복되면 어떻게 되는지 알기 위한 테스트
+	// 이경우 수동 빈 등록이 우선권을 갖는다.
+	// 어떻게?? 수동 빈이 자동빈을 오버라이딩 한다.
+	// 하지만 실제로 웹을 돌리면 스프링 부트에서 디폴트값으로 에러를 발생시킨다.
+	// 이유는 수동빈으로 의도적으로 오버라이딩 한것인지 실수인지 알수 없는 경우가 많기 때문이다.
+	// 만약 의도적이라면 application.properties 파일에
+	// bean-definition-overriding-true를 입력해줘야한다.
+	// 디폴트값은 false이다.
+	@Bean(name="memoryMemberRepository")
+	MemberRepository memberRepotiRepository() {
+		return new MemoryMemberRepository();
+	}
 }
