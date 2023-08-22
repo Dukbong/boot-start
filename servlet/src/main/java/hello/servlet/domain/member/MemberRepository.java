@@ -36,7 +36,7 @@ public class MemberRepository {
 		return store.get(id);
 	}
 	
-	public List<Member> finAll(){
+	public List<Member> findAll(){
 		return new ArrayList<>(store.values());	// Map을 ArrayList로 만들기
 	}
 	

@@ -37,7 +37,7 @@ public class MemberRepositoryTest {
 		memberRepository.save(member1);
 		memberRepository.save(member2);
 		// when
-		List<Member> list = memberRepository.finAll();
+		List<Member> list = memberRepository.findAll();
 		// then
 		Assertions.assertThat(list.size()).isEqualTo(2);
 		Assertions.assertThat(list).contains(member1, member2); // List안에 member1, member2가 있냐.
