@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.servlet.basic.HelloData;
 
 
-@WebServlet(name="responseJsonServlet", urlPatterns = "response-json")
+@WebServlet(name="responseJsonServlet", urlPatterns="/response-json")
 public class ResponseJsonServlet extends HttpServlet{
 
 	private ObjectMapper objMapper = new ObjectMapper();

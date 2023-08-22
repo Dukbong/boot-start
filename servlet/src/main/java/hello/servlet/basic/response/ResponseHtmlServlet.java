@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "responseHtmlServlet", urlPatterns = "/response-html")
+@WebServlet(name="responseHtmlServlet", urlPatterns="/response-html")
 public class ResponseHtmlServlet extends HttpServlet {
 
 	@Override
