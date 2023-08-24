@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import hello.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -99,6 +101,31 @@ public class RequestParamController {
 	// 파라미터 값이 1개가 확실할때는 Map을 아닐경우 MultiValueMap을 사용하는게 좋다.
 	{
 		log.info("username = {}, age = {}", paramMap.get("username"), paramMap.get("age"));
+		return "ok";
+	}
+	
+//	@ResponseBody
+//	@RequestMapping("/model-attribute-v1")
+//	public String modelAttributeV1(@RequestParam String username, @RequestParam int age) {
+//		HelloData helloData = new HelloData();
+//		helloData.setUsername(username);
+//		helloData.setAge(age);
+//		
+//		log.info("username = {}, age = {}", helloData.getUsername(), helloData.getAge());
+//		
+//		log.info("helloData = {}", helloData);
+//		// @DATA는 toString도 오버라이딩 해주기 때문에 해당 구문으로 확인 가능하다.
+//		
+//		return "ok";
+//	}
+	
+	// 위 코드를 @ModelAttribute로 줄인 코드이다.
+	@ResponseBody
+	@RequestMapping("/model-attribute-v1")
+	public String modelAttributeV1(@ModelAttribute HelloData helloData) {
+		log.info("username = {}, age = {}", helloData.getUsername(), helloData.getAge());
+		log.info("helloData = {}", helloData);
+		
 		return "ok";
 	}
 	
