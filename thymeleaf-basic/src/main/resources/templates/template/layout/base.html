@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head th:fragment="common_header(title,links)">
+
+    <title th:replace="${title}">레이아웃 타이틀</title>
+
+    <!-- 공통 -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/awesomeapp.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <script type="text/javascript" th:src="@{/sh/scripts/codebase.js}"></script>
+	<!-- 공통 부분은 대체되지 않고 살아있다. -->
+	
+    <!-- 추가 -->
+    <th:block th:replace="${links}" />
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 자바스크립트 인라인 사용 전 -->
+<script>
+
+    var username = [[${user.username}]];
+    // 문자일경우 "[[${user.username}]]" 으로 해야 자바스크립트 문법상 맞다.
+    var age = [[${user.age}]];
+
+    //자바스크립트 내추럴 템플릿
+    var username2 = /*[[${user.username}]]*/ "test username";
+
+    //객체
+    var user = [[${user}]];
+</script>
+
+<!-- 자바스크립트 인라인 사용 후 -->
+<script th:inline="javascript">
+	// 인라인을 사용하면 타임리프가 알아서 타입을 맞춰준다.
+    var username = [[${user.username}]]; // >> "userA"
+    var age = [[${user.age}]];
+
+    //자바스크립트 내추럴 템플릿
+    var username2 = /*[[${user.username}]]*/ "test username";
+    // 렌더링 되면 /**/ 안에 있는게 나온다.
+
+    //객체
+    // 객체를 json화 시켜서 넣어준다.
+    var user = [[${user}]]; // {"username" : "userA", "age" : 10}
+</script>
+
+<!-- 자바스크립트 인라인 each -->
+<script th:inline="javascript">
+
+    [# th:each="user, stat : ${users}"]
+    var user[[${stat.count}]] = [[${user}]];
+    [/]
+
+</script>
+</body>
+</html>
