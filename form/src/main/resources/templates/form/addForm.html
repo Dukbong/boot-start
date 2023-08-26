@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<link th:href="@{/css/bootstrap.min.css}"
+	href="../css/bootstrap.min.css" rel="stylesheet">
+<style>
+.container {
+	max-width: 560px;
+}
+</style>
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="py-5 text-center">
+			<h2>상품 등록 폼</h2>
+		</div>
+
+		<form action="item.html" th:action th:object="${item}" method="post">
+			<div>
+				<label for="itemName">상품명</label>
+				<!--
+            	<input type="text" id="itemName" name="itemName" class="form-control" placeholder="이름을 입력하세요">
+	            <input type="text" th:field="${item.itemName}" class="form-control" placeholder="이름을 입력하세요">
+	            th.field를 하면 해당 프로퍼티로 태그의 id와 name에 값이 입력된다.
+	                             만약 값이 있다면 value에 값이 나온다.
+            -->
+				<input type="text" th:field="*{itemName}" class="form-control"
+					placeholder="이름을 입력하세요">
+				<!-- 만약 위에서 th:object로 지정한 것과 같다면 *{}로 객체를 생략하고 사용 가능 -->
+				<!-- id="itemName" name="itemName" -->
+
+			</div>
+			<div>
+				<label for="price">가격</label>
+				<!-- 
+   		         <input type="text" id="price" name="price" class="form-control" placeholder="가격을 입력하세요">
+             -->
+				<input type="text" th:field="*{price}" class="form-control"
+					placeholder="가격을 입력하세요">
+			</div>
+			<div>
+				<label for="quantity">수량</label>
+				<!-- 
+            	<input type="text" id="quantity" name="quantity" class="form-control" placeholder="수량을 입력하세요">
+             -->
+				<input type="text" th:field="*{quantity}" class="form-control"
+					placeholder="수량을 입력하세요">
+			</div>
+
+			<hr class="my-4">
+
+			<!-- 일반 HTML 코드 + Spring MVC 기능 -->
+			<!--         <div>판매 여부</div>
+        <div>
+        	<div class="form-check">
+        		<input type="checkbox" id="open" name="open" class="form-check-input">
+        		<input type="hidden" name="_open" value="on"> 히든 필드 추가
+        		
+        			체크 박스에서 체크가 를 하지 않으면 원래 값 자체가 서버로 넘어오지 않는다.
+        			하지만 이때 체크박스 name앞에 _를 붙힌 걸 만들어주면 이 문제를 해결할 수 있다.
+        			예시 ) open = on & _open = on
+        			이 경우 체크박스를 체크했기때문에 Spring MVC가 open의 값이 있는것을 확인하고 사용한다.
+        			이때 _open은 무시된다.
+        			
+        			예시 ) _open = on
+        			이 상태는 oprn 체크박스를 체크하지 않은 경우이다.
+        			이때 Spring MVC는 _open만 있는 것을 확인하고 open의 값이 체크되지 않았다고 인식한다.
+        			이 경우 Boolean 타입으로 찍어보면 결과는 null이 아닌 false로 확인된다.
+        			
+        		
+        		<label for="open" class="form-check-label">판매 오픈</label>
+        	</div>
+        </div> -->
+
+			<!-- Thymeleaf + Spring MVC 기능 -->
+			<div>판매 여부</div>
+			<div>
+				<div class="form-check">
+					<input type="checkbox" id="open" th:field="${item.open}"
+						class="form-check-input">
+					<!-- 체크 박스에 th:field를 사용하면 _open도 생성해주기 때문에 편리하다. -->
+					<!-- 그리고 체크를 했다면 ckecked 옵션도 넣어준다. / 체크를 안하면 안넣어준다. -->
+					<label for="open" class="form-check-label">판매 오픈</label>
+					<!-- 단, 라벨을 사용하고 싶다면 id를 별도로 지정해줘야 한다. thymeleaf사용하면 라벨이 안된다... -->
+				</div>
+			</div>
+
+			<div>
+				<div>등록 지역</div>
+				<div th:each="region : ${regions}"
+					class="form-check form-check-inline">
+					<input type="checkbox" th:field="*{regions}"
+						th:value="${region.key}" class="form-check-input">
+					<!-- 
+        			#ids.prev('regions')를 하면 이전에 들어간 resions를 찾아서 넣는다.
+        			지금 th:field="*{regions}"는 item.regions인데
+        			타입이 List 이기때문에 thymeleaf는 순서대로 프로퍼티+count한 수로 보여준다.
+        			ex) region1, region2 ...
+        			이때 나온 값을 쓰는거다.
+        		 -->
+					<label th:for="${#ids.prev('regions')}" th:text="${region.value}"
+						class="form-check-label">서울</label>
+				</div>
+			</div>
+
+			<div>
+				<div>상품 종류</div>
+				<div th:each="type : ${itemType}"
+					class="form-check form-check-inline">
+					<input type="radio" th:field="*{itemType}"
+						th:value="${type.name()}" class="form-check-input">
+					<!-- Enum은 name()으로 이름을 가져올 수 있다. -->
+					<label th:for="#{#ids.prev('itemType')}"
+						th:text="${type.description}" class="form-check-label">BOOK</label>
+				</div>
+			</div>
+
+			<div>
+				<div>배송 방식</div>
+				<select th:field="*{deliveryCode}" class="form-select">
+					<option value="">==배송 방식 선택==</option>
+					<option th:each="deliveryCode : ${deliveryCodes}"
+						    th:value="${deliveryCode.code}"
+							th:text="${deliveryCode.displayName}">FAST</option>
+				</select>
+			</div>
+			<hr class="my-4">
+			<div class="row">
+				<div class="col">
+					<button class="w-100 btn btn-primary btn-lg" type="submit">상품
+						등록</button>
+				</div>
+				<div class="col">
+					<button class="w-100 btn btn-secondary btn-lg"
+						onclick="location.href='items.html'"
+						th:onclick="|location.href='@{/form/items}'|" type="button">취소</button>
+				</div>
+			</div>
+
+		</form>
+
+	</div>
+	<!-- /container -->
+</body>
+</html>
