@@ -5,14 +5,25 @@ import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import hello.login.web.filter.LogFilter;
 import hello.login.web.filter.LoginFilter;
+import hello.login.web.intercepter.LogInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 	// WerbMVCConfigurer는 인터셉터를 등록하기 위해서 구현하는거다.
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LogInterceptor())
+			    .order(1)
+			    .addPathPatterns("/**")
+			    .excludePathPatterns("/css/**", "/*.ico", "/error");
+	}
+	
 
 	@Bean
 	public FilterRegistrationBean<Filter> logFilter() {
@@ -24,6 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
 		return filterRegistrationBean;
 	}
 	
+
 	@Bean
 	public FilterRegistrationBean<Filter> loginCheckFilter() {
 		FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
