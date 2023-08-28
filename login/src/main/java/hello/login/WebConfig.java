@@ -5,12 +5,14 @@ import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import hello.login.web.filter.LogFilter;
 import hello.login.web.filter.LoginFilter;
 
 @Configuration
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
+	// WerbMVCConfigurer는 인터셉터를 등록하기 위해서 구현하는거다.
 
 	@Bean
 	public FilterRegistrationBean<Filter> logFilter() {
