@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import hello.login.web.filter.LogFilter;
 import hello.login.web.filter.LoginFilter;
 import hello.login.web.intercepter.LogInterceptor;
+import hello.login.web.intercepter.LoginInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -22,6 +23,12 @@ public class WebConfig implements WebMvcConfigurer {
 			    .order(1)
 			    .addPathPatterns("/**")
 			    .excludePathPatterns("/css/**", "/*.ico", "/error");
+		
+		registry.addInterceptor(new LoginInterceptor())
+				.order(2)
+				.addPathPatterns("/**")
+				.excludePathPatterns("/", "/members/add","/login","/logout","/css/**","/*.ico","/error");
+		
 	}
 	
 

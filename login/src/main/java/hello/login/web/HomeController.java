@@ -76,8 +76,20 @@ public class HomeController {
     	model.addAttribute("member", loginMember);
     	return "/loginHome";
     }
-    @GetMapping("/")
+//    @GetMapping("/")
     public String homeLoginV3String(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+    	// @SessionAttribute는 request.getSession(false)처럼 새로운 세션을 생성하지 않는다.
+    	
+    	// 세션에 회원 데이터가 없으면 home
+    	if(loginMember == null) {
+    		return "/home";
+    	}
+    	
+    	model.addAttribute("member", loginMember);
+    	return "/loginHome";
+    }
+    @GetMapping("/")
+    public String homeLoginV3Argument(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
     	// @SessionAttribute는 request.getSession(false)처럼 새로운 세션을 생성하지 않는다.
     	
     	// 세션에 회원 데이터가 없으면 home
