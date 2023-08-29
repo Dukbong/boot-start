@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container" style="max-width: 600px">
+		<div class="py-5 text-center">
+			<h2>500 오류 화면 Spring boot 제공</h2>
+		</div>
+
+		<div>
+			<p>오류 화면 입니다.</p>
+		</div>
+		<ul>
+			<li>오류 정보</li>
+			<ul>
+				<li th:text="|timestamp: ${timestamp}|">
+				<li th:text="|path: ${path}|">
+				<li th:text="|status: ${status}|">
+				<li th:text="|message: ${message}|">
+				<li th:text="|error: ${error}|">
+				<li th:text="|exception: ${exception}|">
+				<li th:text="|errors: ${errors}|">
+				<li th:text="|trace: ${trace}|">
+			</ul>
+		</ul>
+
+		<hr class="my-4">
+
+	</div>
+	<!-- /container -->
+
+</body>
+</html>
