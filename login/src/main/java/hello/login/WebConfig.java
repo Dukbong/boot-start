@@ -1,13 +1,17 @@
 package hello.login;
 
+import java.util.List;
+
 import javax.servlet.Filter;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import hello.login.web.argumentresolver.LoginMemberArgumentResolver;
 import hello.login.web.filter.LogFilter;
 import hello.login.web.filter.LoginFilter;
 import hello.login.web.intercepter.LogInterceptor;
@@ -15,7 +19,15 @@ import hello.login.web.intercepter.LoginInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-	// WerbMVCConfigurer는 인터셉터를 등록하기 위해서 구현하는거다.
+	// WerbMVCConfigurer는 인터셉터, argument Resolver를 등록하기 위해서 구현하는거다.
+	
+	
+	
+	
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+		resolvers.add(new LoginMemberArgumentResolver());
+	}
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -31,7 +43,6 @@ public class WebConfig implements WebMvcConfigurer {
 		
 	}
 	
-
 	@Bean
 	public FilterRegistrationBean<Filter> logFilter() {
 		FilterRegistrationBean<Filter> filterRegistrationBean =  new FilterRegistrationBean<>();
