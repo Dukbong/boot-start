@@ -1,9 +1,12 @@
 package hello.exception.api;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import hello.exception.exception.BadRequestException;
 import hello.exception.exception.UserException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +29,17 @@ public class ApiExceptionController {
 		}
 		
 		return new MemberDto(id, "hello " + id);
+	}
+	
+	@GetMapping("/api/response-status-ex1")
+	public String responseStatusEx1() {
+		throw new BadRequestException();
+	}
+	
+	@GetMapping("/api/response-status-ex2")
+	public String responseStatusEx2() {
+		//ResponseStatusException을 사용하면 동적으로 상태코드와 메시지를 변경할 수 있다.
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "error.bad", new IllegalArgumentException());
 	}
 	
 	@Data
