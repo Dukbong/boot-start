@@ -42,7 +42,7 @@ public class ErrorPageController {
 		return "/error_page/500";
 	}
 	
-	@RequestMapping(value = "/error_page/500", produces = MediaType.APPLICATION_JSON_VALUE)
+//	@RequestMapping(value = "/error_page/500", produces = MediaType.APPLICATION_JSON_VALUE)
 	// produces는 클라이언트가 보내는 Accept가 application/json이면 해당 컨트롤러를 실행한다는 뜻이다.
 	public ResponseEntity<Map<String, Object>> errorPage500Api(HttpServletRequest request, HttpServletResponse response){
 		log.info("API error Page 500");

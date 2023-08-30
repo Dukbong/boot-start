@@ -6,7 +6,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 // 스프링 부트의 예외페이지를 보기위해 편하게 작업하기 위해 주석한다.
 // 서블릿으로 할때는 있어야한다.
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {

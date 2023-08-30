@@ -1,20 +1,34 @@
 package hello.exception.servlet;
 
+import java.util.List;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import hello.exception.filter.LogFilter;
 import hello.exception.interceptor.LogInterceptor;
+import hello.exception.resolver.MyHandlerExceptionResolver;
+import hello.exception.resolver.UserHandlerExceptionResolver;
+import lombok.extern.slf4j.Slf4j;
 
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+	//HandlerExceptionResolver 등록
+	@Override
+	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+		resolvers.add(new MyHandlerExceptionResolver());
+		resolvers.add(new UserHandlerExceptionResolver());
+	}
 	
-	
+	// Interceptor 등록
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LogInterceptor())
@@ -24,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
 				// 오류 페이지 경로를 여기서 뺄수 있다.
 	}
 
-	@Bean
+//	@Bean
 	public FilterRegistrationBean logFilter(){
 		FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		
