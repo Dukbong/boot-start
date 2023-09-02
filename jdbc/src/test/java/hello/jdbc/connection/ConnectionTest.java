@@ -15,6 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ConnectionTest {
+	
+	/*
+	 * DriverManager => JDBC 표준 인터페이스를 사용하여 하나하나 커넥션을 획득할 수 있다.
+	 * DataSource => DirverManager의 단점을 보완 / 항상 새로운 커넥션 획득 / 성능에 좋지 못하다.
+	 * Connection pool => DataSource를 구현한 pool을 통해 커넥션을 여러개 획득해서 성능을 높인다.
+	 * */
 
 	@Test
 	void driverManager() throws SQLException {
@@ -58,6 +64,8 @@ public class ConnectionTest {
 	void dataSourceConnectionPool() throws SQLException {
 		// 커넥션 풀링
 		// HikariDataSource도 DataSource를 구현한 객체이다.
+		
+		// 커넥션 풀링이 DB커넥션을 획득한다.
 		HikariDataSource dataSource = new HikariDataSource();
 		dataSource.setJdbcUrl(ConnectionConst.URL);
 		dataSource.setUsername(ConnectionConst.USERNAME);
