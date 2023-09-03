@@ -72,3 +72,17 @@ controller가 service의 메소드를 호출한다는 가정하에
 확인이 하고 싶다면
 controller에서 service을 인젝션할때
 참조변수명.getClass()로 확인할 수 있다
+
+### DB 락 
+기본적으로 update, delete는 DB 락을 획득해야만 가능하다.
+일반적으로는 select시에는 DB 락을 회득하지 않아도 가능하다.
+만약 select시에도 DB 락을 획득해야만 하도록 바꾸고 싶다면 "select for update" 구문을 사용하면된다.
+
+- select * from member where member_id = "memberA" for update;
+
+이 경우 세션A가 조회 시점에서 락을 가져가기 때문에 다른 세션에서는 해당 데이터를 변경할 수 없다.
+대신 이 경우 select 후에도 commit을 해야만 DB 락을 반납하기 때문에 commit이 중요하다.
+
+Update를 하기 위해서는 select가 먼저 이루어져야 하는데 이때 오류를 막기 위해서 사용된다.
+
+이런 경우는 대부분 비즈니스 로직 중 중요한 부분에서 사용하게 된다.
