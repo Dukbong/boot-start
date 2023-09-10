@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * 트렌젝션 - 트랜젝션 템플릿
  */
 
-@Service
+//@Service
 public class MemberServiceV3_2 {
 
 	private final MemberRepositoryV3 memberRepository;
