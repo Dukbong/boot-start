@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 
-@Service
+//@Service
 @RequiredArgsConstructor
 @Slf4j
 public class MemberServiceV3_1 {
