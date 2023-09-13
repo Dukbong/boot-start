@@ -5,7 +5,22 @@ import java.sql.SQLException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class UnCheckedAppTest {
+	
+	// 예외 포함 스택 트레이스 (중요)
+	@Test
+	void printEx() {
+		Controller controller = new Controller();
+		try {
+			controller.request();
+		}catch(Exception e) {
+			log.info("ex ", e);
+		}
+	}
+	
 	
 	@Test
 	void checked() {
@@ -47,6 +62,7 @@ public class UnCheckedAppTest {
 			try {
 				runSQL();
 			} catch (SQLException e) {
+				// 예외를 변경하거나 할때 기존 예외를 매개변수로 넣어줘야한다.
 				throw new RuntimeSQLException(e);
 			}
 		}
